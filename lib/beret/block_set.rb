@@ -5,11 +5,11 @@ module Beret
       @block_json = block_json
     end
 
-    def find(field_name, options)
+    def find(field_name, options={})
       Search.new(blocks, field_name, options).results
     end
 
-    def update(field_name, options)
+    def update(field_name, options={})
       results = find(field_name, options)
 
       results.each do |result|
