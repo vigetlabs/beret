@@ -31,10 +31,19 @@ ck_json = "[{\"content\":{\"text\":\"This is some text.\"},\"type\":\"redactor\"
 beret = Beret.new(ck_json)
 
 # Finding values
-beret.find(:photo_id) # => [<Beret::Result value="42">, <Beret::Result value="144">]
-beret.find(:photo_id, in: [:image]) # => [<Beret::Result value="42">]
-beret.find(:photo_id, in: [:avatar]) # => [<Beret::Result value="144">]
+beret.find(:photo_id) # => [<Beret::SearchResult value="42">, <Beret::SearchResult value="144">]
+beret.find(:photo_id, in: [:image]) # => [<Beret::SearchResult value="42">]
+beret.find(:photo_id, in: [:avatar]) # => [<Beret::SearchResult value="144">]
 beret.find(:photo_id, in: [:some_other_block_type]) # => []
+
+# Using SearchResult objects
+result = beret.find(:photo_id).first
+result.value # => "42"
+result.field_name # => "photo_id"
+result.block # => <Beret::Block>
+result.block.attributes # => { "photo_id" => "42" }
+result.block.type # => "image"
+result.block.parent # => <Beret::Block>
 
 # In-place updating
 beret.update(:photo_id, in: [:image]) do |value|
