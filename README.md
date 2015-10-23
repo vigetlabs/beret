@@ -52,5 +52,5 @@ beret.update(:photo_id, in: [:image]) do |value|
   Image.find(value).to_sgid
 end
 
-# Retrieving JSON
+# Retrieving JSON (useful for saving or returning the net result of an in-place update)
 beret.to_json
