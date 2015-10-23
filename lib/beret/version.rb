@@ -2,7 +2,7 @@ module Beret
 
   VERSION = [
     0,    # major
-    2,    # minor
+    3,    # minor
     0     # patch
   ].join('.')
 
