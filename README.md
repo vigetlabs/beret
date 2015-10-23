@@ -31,14 +31,16 @@ ck_json = "[{\"content\":{\"text\":\"This is some text.\"},\"type\":\"redactor\"
 beret = Beret.new(ck_json)
 
 # Finding values
-beret.find(field: :photo_id) # => [<Beret::Result value="42">, <Beret::Result value="144">]
-beret.find(field: :photo_id, in: [:image]) # => [<Beret::Result value="42">]
-beret.find(field: :photo_id, in: [:avatar]) # => [<Beret::Result value="144">]
-beret.find(field: :photo_id, in: [:some_other_block_type]) # => []
+beret.find(:photo_id) # => [<Beret::Result value="42">, <Beret::Result value="144">]
+beret.find(:photo_id, in: [:image]) # => [<Beret::Result value="42">]
+beret.find(:photo_id, in: [:avatar]) # => [<Beret::Result value="144">]
+beret.find(:photo_id, in: [:some_other_block_type]) # => []
 
 # In-place updating
-beret.update(:count, in: [:kitten_count]) do |value|
-  value + " kittens"
+beret.update(:photo_id, in: [:image]) do |value|
+  # Transform the value any way you'd like here.
+  # In this example, we convert a plain old ID to a SGID
+  Image.find(value).to_sgid
 end
 
 # Retrieving JSON
