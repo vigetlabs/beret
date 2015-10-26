@@ -19,6 +19,10 @@ module Beret
       @attributes[field_name.to_s] = value
     end
 
+    def update_content(new_content)
+      @attributes = Hash(new_content)
+    end
+
     def type
       block_json[type_key]
     end

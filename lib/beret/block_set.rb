@@ -13,7 +13,7 @@ module Beret
       results = find(field_name, options)
 
       results.each do |result|
-        new_value = yield result.value
+        new_value = yield result.value, result.block
         result.block.update_attribute(field_name, new_value)
       end
     end
