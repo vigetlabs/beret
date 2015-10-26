@@ -45,18 +45,18 @@ result.block.attributes # => { "photo_id" => "42" }
 result.block.type # => "image"
 result.block.parent # => <Beret::Block>
 
+beret.find(:photo_id, in: [:image]) do |value, block|
+  # You can also replace the contents of an entire block with
+  # Beret::Block#update_content
+  image = Image.find(value)
+  block.update_content(image.to_json)
+end
+
 # In-place updating
 beret.update(:photo_id, in: [:image]) do |value, block|
   # Transform the value any way you'd like here.
   # In this example, we convert a plain old ID to a SGID
   Image.find(value).to_sgid
-end
-
-beret.update(:photo_id, in: [:image]) do |value, block|
-  # You can also replace the contents of an entire block with
-  # Beret::Block#update_content
-  image = Image.find(value)
-  block.update_content(image.to_json)
 end
 
 # Retrieving JSON (useful for saving or returning the net result of an in-place update)

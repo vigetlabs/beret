@@ -6,7 +6,15 @@ module Beret
     end
 
     def find(field_name, options={})
-      Search.new(blocks, field_name, options).results
+      results = Search.new(blocks, field_name, options).results
+
+      if block_given?
+        results.each do |result|
+          yield result.value, result.block
+        end
+      end
+
+      results
     end
 
     def update(field_name, options={})
